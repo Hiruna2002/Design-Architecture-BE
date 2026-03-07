@@ -18,21 +18,21 @@ router.get("/", async (req: Request, res: Response): Promise<void> => {
 router.post("/", async (req: Request, res: Response): Promise<void> => {
     try{
         const { 
-            name, 
+           name, 
             description, 
-            startDate, 
-            endDate, 
-            status, 
-            category 
+            imageUrl, 
+            category, 
+            cost,
+            area
         } = req.body;
 
         const product = new Project({
-            name,
-            description,
-            startDate,
-            endDate,
-            status,
-            category
+            name, 
+            description, 
+            imageUrl, 
+            category, 
+            cost,
+            area
         });
         const addProject = await product.save();
         res.json(addProject);
@@ -47,10 +47,10 @@ router.put("/:id", async (req: Request, res: Response): Promise<void> => {
         const { 
             name, 
             description, 
-            startDate, 
-            endDate, 
-            status, 
-            category 
+            imageUrl, 
+            category, 
+            cost,
+            area
         } = req.body;
 
         const product = await Project.findById(req.params.id);
@@ -59,10 +59,10 @@ router.put("/:id", async (req: Request, res: Response): Promise<void> => {
             // Update the product fields
             product.name = name;
             product.description = description;
-            product.startDate = startDate;
-            product.endDate = endDate;
-            product.status = status;
+            product.imageUrl = imageUrl;
             product.category = category;
+            product.cost = cost;
+            product.area = area;
 
             const updatedProduct = await product.save();
             res.json(updatedProduct);

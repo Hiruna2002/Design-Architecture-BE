@@ -3,11 +3,10 @@ import mongoose, {Document} from "mongoose";
 export interface IProject extends Document {
     name: string;
     description: string;
-    startDate: Date;
-    endDate: Date;
-    status: string;
+    imageUrl: string;
     category: string;
-    teamMembers: string[];
+    cost: number;
+    area: string;
 }
 
 const projectSchema = new mongoose.Schema<IProject>({
@@ -16,29 +15,25 @@ const projectSchema = new mongoose.Schema<IProject>({
         required: true, 
         trim: true 
     },
+    
     description: { 
         type: String, 
         required: true 
     },
-    startDate: { 
-        type: Date 
+
+    imageUrl: {
+        type: String
     },
-    endDate: { 
-        type: Date 
-    },
-    status: { 
-        type: String, 
-        default: "Not Started" 
-    },
+
     category: { 
         type: String, 
         required: true 
     },
-    teamMembers: [
-        { 
-            type: String 
-        }
-    ],
+
+    cost: {
+        type: Number,
+        required: true,
+    }
 });
 
 const Project = mongoose.model<IProject>("Project", projectSchema);
