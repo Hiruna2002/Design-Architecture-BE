@@ -33,6 +33,10 @@ const projectSchema = new mongoose.Schema<IProject>({
     cost: {
         type: Number,
         required: true,
+    },
+
+    area: {
+        type: String
     }
 });
 

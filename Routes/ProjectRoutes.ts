@@ -26,7 +26,7 @@ router.post("/", async (req: Request, res: Response): Promise<void> => {
             area
         } = req.body;
 
-        const product = new Project({
+        const project = new Project({
             name, 
             description, 
             imageUrl, 
@@ -34,7 +34,7 @@ router.post("/", async (req: Request, res: Response): Promise<void> => {
             cost,
             area
         });
-        const addProject = await product.save();
+        const addProject = await project.save();
         res.json(addProject);
     } catch(error){
         res.status(500).json({ error: "Server error" });
