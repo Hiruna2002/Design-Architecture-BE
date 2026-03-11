@@ -9,18 +9,21 @@ router.post("/", async (req: Request, res: Response):Promise <void> => {
         const {
             name,
             email,
+            phone,
             password,
             role
         } = req.body
         const user = new User({
             name,
             email,
+            phone,
             password,
             role
         })
         const addUser = await user.save()
         res.status(201).json(addUser);
     } catch (error) {
+        console.error(error)
         res.status(500).json({ error: "Error creating user" });
         return;
     }
@@ -43,6 +46,7 @@ router.put("/:id", async (req: Request, res: Response): Promise<void> => {
         const {
             name,
             email,
+            phone,
             password,
             role
         } = req.body
@@ -50,6 +54,7 @@ router.put("/:id", async (req: Request, res: Response): Promise<void> => {
         if(user){
             user.name = name || user.name;
             user.email = email || user.email;
+            user.phone = phone || user.phone;
             user.password = password || user.password;
             user.role = role || user.role;
 
@@ -82,3 +87,5 @@ router.delete("/:id", async (req: Request, res: Response): Promise<void> => {
         return;
     }
 });
+
+export default router;

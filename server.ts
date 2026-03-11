@@ -6,6 +6,7 @@ import connectDB from "./config/db";
 
 import projectRoutes from "./Routes/ProjectRoutes";
 import teamMembersRoutes from "./Routes/TeamMembersRoutes";
+import userRoutes from "./Routes/UserRoutes";
 
 const app: Application = express();
 
@@ -35,6 +36,7 @@ app.get("/", (req: Request, res: Response): void => {
 // Api routes
 app.use("/api/projects", projectRoutes);
 app.use("/api/team-members", teamMembersRoutes);
+app.use("/api/users", userRoutes);
 
 
 app.listen(PORT, (): void => {
