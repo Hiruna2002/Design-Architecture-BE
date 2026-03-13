@@ -1,5 +1,6 @@
 import Project from "../Model/Project"
 import { Request, Response, Router } from "express";
+import upload from "../middleware/upload";
 
 const router: Router = Router();
 
@@ -19,18 +20,18 @@ router.post("/", async (req: Request, res: Response): Promise<void> => {
     try{
         const { 
            name, 
-            description, 
-            imageUrl, 
-            category, 
+            description,  
+            // category, 
             cost,
-            area
+            area,
+            imageUrl,
         } = req.body;
 
         const project = new Project({
             name, 
             description, 
-            imageUrl, 
-            category, 
+            imageUrl : imageUrl || "cloudinary://<335812944121835>:<pFsiY9QovHTW1xilSK8Mau0dwLA>@dod3xppgl",
+            // category, 
             cost,
             area
         });
@@ -48,7 +49,7 @@ router.put("/:id", async (req: Request, res: Response): Promise<void> => {
             name, 
             description, 
             imageUrl, 
-            category, 
+            // category, 
             cost,
             area
         } = req.body;
@@ -60,7 +61,7 @@ router.put("/:id", async (req: Request, res: Response): Promise<void> => {
             product.name = name;
             product.description = description;
             product.imageUrl = imageUrl;
-            product.category = category;
+            // product.category = category;
             product.cost = cost;
             product.area = area;
 

@@ -4,7 +4,7 @@ export interface IProject extends Document {
     name: string;
     description: string;
     imageUrl: string;
-    category: string;
+    // category: string;
     cost: number;
     area: string;
 }
@@ -25,10 +25,10 @@ const projectSchema = new mongoose.Schema<IProject>({
         type: String
     },
 
-    category: { 
-        type: String, 
-        required: true 
-    },
+    // category: { 
+    //     type: String, 
+    //     required: true 
+    // },
 
     cost: {
         type: Number,

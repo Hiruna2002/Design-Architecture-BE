@@ -11,7 +11,6 @@ export interface IUser extends Document {
 const userSchema = new mongoose.Schema<IUser>({
     name: {
         type: String,
-        required: true,
         trim: true
     },
     email: {
@@ -31,7 +30,6 @@ const userSchema = new mongoose.Schema<IUser>({
     },
     role: {
         type: String,
-        required: true,
         trim: true
     }
 });
