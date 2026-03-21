@@ -8,6 +8,7 @@ import projectRoutes from "./Routes/ProjectRoutes";
 import teamMembersRoutes from "./Routes/TeamMembersRoutes";
 import userRoutes from "./Routes/UserRoutes";
 import uploadRoutes from "./Routes/UploadRoutes"; 
+import uploadSubImageRoutes from "./Routes/uploadSubImageRoutes";
 
 const app: Application = express();
 
@@ -39,14 +40,13 @@ app.use("/api/projects", projectRoutes);
 app.use("/api/team-members", teamMembersRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/upload", uploadRoutes)
+app.use("/api/subImagesUpload", uploadSubImageRoutes)
+// app.use("api/sub")
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
+app.use("/subImagesUpload", express.static("subImagesUpload"))
 
 
 app.listen(PORT, (): void => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
-
-
-
-// mongodb+srv://admin:4wCn2iRnVKv7PjGg@cluster0.swkba9h.mongodb.net/?appName=Cluster0

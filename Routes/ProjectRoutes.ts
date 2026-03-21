@@ -25,12 +25,14 @@ router.post("/", async (req: Request, res: Response): Promise<void> => {
             cost,
             area,
             imageUrl,
+            subImageUrls
         } = req.body;
 
         const project = new Project({
             name, 
             description, 
             imageUrl : imageUrl || "cloudinary://<335812944121835>:<pFsiY9QovHTW1xilSK8Mau0dwLA>@dod3xppgl",
+            subImageUrls: subImageUrls || "cloudinary://<335812944121835>:<pFsiY9QovHTW1xilSK8Mau0dwLA>@dod3xppgl",
             // category, 
             cost,
             area
@@ -49,6 +51,7 @@ router.put("/:id", async (req: Request, res: Response): Promise<void> => {
             name, 
             description, 
             imageUrl, 
+            subImageUrls,
             // category, 
             cost,
             area
@@ -61,6 +64,7 @@ router.put("/:id", async (req: Request, res: Response): Promise<void> => {
             product.name = name;
             product.description = description;
             product.imageUrl = imageUrl;
+            product.subImageUrls = subImageUrls;
             // product.category = category;
             product.cost = cost;
             product.area = area;
