@@ -9,6 +9,7 @@ import teamMembersRoutes from "./Routes/TeamMembersRoutes";
 import userRoutes from "./Routes/UserRoutes";
 import uploadRoutes from "./Routes/UploadRoutes"; 
 import uploadSubImageRoutes from "./Routes/uploadSubImageRoutes";
+import adminService from "./Routes/ServiceRoutes";
 
 const app: Application = express();
 
@@ -41,6 +42,7 @@ app.use("/api/team-members", teamMembersRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/upload", uploadRoutes)
 app.use("/api/subImagesUpload", uploadSubImageRoutes)
+app.use("/api/services", adminService)
 // app.use("api/sub")
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
