@@ -19,17 +19,18 @@ router.post("/", async (req: Request, res: Response): Promise<void> => {
     try{
         const { 
            name, 
-           description,  
+           desc,  
            exp,
            benifits
         } = req.body;
 
         const service = new Service({
             name, 
-            description, 
+            desc, 
             exp,
             benifits
         });
+        console.log("Incoming:", req.body);
         const addService = await service.save();
         res.json(addService);
     } catch(error){
@@ -81,6 +82,16 @@ router.delete("/:id", async (req: Request, res: Response): Promise<void> => {
         res.status(500).json({ error: "Server error" });
         return;
     }
+});
+
+router.get("/:id", async (req, res) => {
+  try {
+    console.log("request params id is: ", req.params.id);
+    const service = await Service.findById(req.params.id);
+    res.json(service);
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
+  }
 });
 
 export default router;

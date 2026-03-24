@@ -13,17 +13,30 @@ import adminService from "./Routes/ServiceRoutes";
 
 const app: Application = express();
 
-app.use(cors({
+const corsOptions = {
   origin: [
     'https://design-architecture-fe.vercel.app',     
     'http://localhost:5173',                  
     'http://localhost:3000',
     'http://localhost:9000'                   
   ],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  credentials: true,                          
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],                          
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+};
+
+app.use(cors(corsOptions)); 
+
+app.use((req, res, next) => {
+  if (req.method === 'OPTIONS') {
+    res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.sendStatus(204);
+  } else {
+    next();
+  }
+});
 
 app.use(express.json());
 
