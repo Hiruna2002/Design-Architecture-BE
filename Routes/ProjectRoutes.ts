@@ -31,8 +31,10 @@ router.post("/", async (req: Request, res: Response): Promise<void> => {
         const project = new Project({
             name, 
             description, 
-            imageUrl : imageUrl || "cloudinary://<335812944121835>:<pFsiY9QovHTW1xilSK8Mau0dwLA>@dod3xppgl",
-            subImageUrls: subImageUrls || "cloudinary://<335812944121835>:<pFsiY9QovHTW1xilSK8Mau0dwLA>@dod3xppgl",
+            // imageUrl : imageUrl || "cloudinary://<335812944121835>:<pFsiY9QovHTW1xilSK8Mau0dwLA>@dod3xppgl",
+            imageUrl: imageUrl || "",
+            subImageUrls: Array.isArray(subImageUrls) ? subImageUrls : [],
+            // subImageUrls: subImageUrls || "cloudinary://<335812944121835>:<pFsiY9QovHTW1xilSK8Mau0dwLA>@dod3xppgl",
             // category, 
             cost,
             area
@@ -57,20 +59,21 @@ router.put("/:id", async (req: Request, res: Response): Promise<void> => {
             area
         } = req.body;
 
-        const product = await Project.findById(req.params.id);
+        const project = await Project.findById(req.params.id);
 
-        if(product){
+        if(project){
             // Update the product fields
-            product.name = name;
-            product.description = description;
-            product.imageUrl = imageUrl;
-            product.subImageUrls = subImageUrls;
-            // product.category = category;
-            product.cost = cost;
-            product.area = area;
+            project.name = name;
+            project.description = description;
+            project.imageUrl = imageUrl;
+            project.subImageUrls = Array.isArray(subImageUrls) ? subImageUrls : project.subImageUrls;
+            // project.subImageUrls = subImageUrls;
+            // project.category = category;
+            project.cost = cost;
+            project.area = area;
 
-            const updatedProduct = await product.save();
-            res.json(updatedProduct);
+            const updatedProject = await project.save();
+            res.json(updatedProject);
         } else {
             res.status(404).json({ error: "Project not found" });
         }
@@ -82,9 +85,9 @@ router.put("/:id", async (req: Request, res: Response): Promise<void> => {
 
 router.delete("/:id", async (req: Request, res: Response): Promise<void> => {
     try{
-        const product = await Project.findById(req.params.id);
-        if(product){
-            await product.deleteOne();
+        const project = await Project.findById(req.params.id);
+        if(project){
+            await project.deleteOne();
             res.json({ message: "Project deleted successfully" });
         } else {
             res.status(404).json({ error: "Project not found" });
@@ -93,6 +96,21 @@ router.delete("/:id", async (req: Request, res: Response): Promise<void> => {
         res.status(500).json({ error: "Server error" });
         return;
     }
+});
+
+router.get("/:id", async (req, res) => {
+  try {
+    console.log("backend ok.......")
+    const project = await Project.findById(req.params.id);
+
+    if (!project) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+    
+    res.json(project);
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
+  }
 });
 
 export default router;
