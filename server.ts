@@ -18,6 +18,7 @@ const corsOptions = {
   origin: [
     'https://design-architecture-fe.vercel.app',     
     'http://localhost:5174',                  
+    'http://localhost:5173',                  
     'http://localhost:3000',
     'http://localhost:9000'                   
   ],

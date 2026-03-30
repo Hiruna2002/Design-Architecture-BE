@@ -1,0 +1,59 @@
+import { Request, Response, NextFunction } from "express";
+import jwt from "jsonwebtoken";
+import User from "../Model/User";
+
+export interface AuthRequest extends Request {
+  user?: {
+    _id: string;
+    name: string;
+    email: string;
+    role: "admin" | "user";
+  };
+}
+
+const protect = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  let token: string | undefined;
+
+  if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+    try {
+      token = req.headers.authorization.split(" ")[1];
+      const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as any;
+
+      const user = await User.findById(decoded.user.id).select("-password");
+      if (!user) {
+        return res.status(401).json({ message: "User not found" });
+      }
+
+      req.user = {
+        _id: user._id.toString(),
+        name: user.name,
+        email: user.email,
+        role: user.role
+      };
+
+      next();
+    } catch (error) {
+      console.error("Token verification failed:", error);
+      return res.status(401).json({ message: "Not authorized, token failed" });
+    }
+  } else {
+    return res.status(401).json({ message: "Not authorized, no token provided" });
+  }
+};
+
+const admin = (req: AuthRequest, res: Response, next: NextFunction) => {
+  console.log("User role:", req.user?.role);
+  if (req.user && req.user.role === "admin") {
+    next();
+  } else {
+    res.status(403).json({ message: "Not authorized as an admin" });
+  }
+};
+
+export { protect, admin };
+
+
